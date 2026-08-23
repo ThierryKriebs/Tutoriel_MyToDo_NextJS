@@ -9,5 +9,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
+}
+
+// la valeur d'id sera automatiquement généré par la BDD à l'insertion (décorateur auto())
+// id est mappé sur le champ id (décorateur map), il est de type ObjectId
+model Todo {
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  date String
 }
