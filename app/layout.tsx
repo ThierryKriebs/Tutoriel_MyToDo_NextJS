@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Background from "./ui/Background";
+import Logo from "@/app/ui/Logo";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({
   return (
     <html lang="fr"> 
       <body className={inter.className}>
-        <header>LOGO</header>
+        <header>
+          <Logo />
+        </header>
         <main>
           {children}
           <Background />
