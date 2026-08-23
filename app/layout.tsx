@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Background from "./ui/Background";
 import Logo from "@/app/ui/Logo";
+import NavLinks from "@/app/ui/Nav-links";
+
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -34,6 +36,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <header>
           <Logo />
+          <div className="nav-links">
+            <NavLinks />
+          </div>
         </header>
         <main>
           {children}
