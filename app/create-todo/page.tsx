@@ -1,20 +1,56 @@
 'use client'
 
 import { useState } from "react"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const CreateTodo = () => {
 
-  const [title, setTitle] = useState('')
-  const [date, setDate] = useState('')
-  const [isDisabled, setIsDisabled] = useState(false)
+  const notifyError = () => toast.error("Veuillez remplir tous les champs !");
 
-  const handleCreateTodo = () => {
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleCreateTodo = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if(!title || !date) {
+      notifyError()
+      return
+    }
+
+    setIsDisabled(true);
+
+    const response = await fetch('/api/create-todo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title,
+        date
+      })
+    })
+
 
   }
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <form className="form" onSubmit={handleCreateTodo}>
         <div className = "title">
           <h1>Créer une tâche</h1>
