@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from "next/navigation";
 import { useState } from "react"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,7 +8,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const CreateTodo = () => {
 
+  const router = useRouter();
+
   const notifyError = () => toast.error("Veuillez remplir tous les champs !");
+  const notifySuccess = () => toast.success("Tâche créée avec succès", {
+    onClose: () => {
+      router.push('/todos')
+    }
+  });
 
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
@@ -33,6 +41,12 @@ const CreateTodo = () => {
         date
       })
     })
+
+    if (response.ok) {
+      notifySuccess()
+    } else {
+      alert('Erreur lors de la création de la tâche!')
+    }
 
 
   }
