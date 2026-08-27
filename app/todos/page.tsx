@@ -1,5 +1,7 @@
 "use client"
-import { useState, useEffect } from "react"
+import { todo } from "node:test";
+import { useState, useEffect } from "react";
+import { formatDate } from '@/app/utils/formatDate';
 
 interface Todo {
   id: string;
@@ -35,9 +37,34 @@ const TodoList = () => {
       }
 
       <div className="listContainer">
-        {/* LIST */}
-      </div>
+        <ul className="ul-list mb w-60 shadow-hover" role = "list">
+        {
+          todos.map((todo: Todo) => (
+            <li key={todo.id} className="li-list">
+              <div className="todo">
+                <p className="date">{formatDate(todo.date)}</p>
+                <h2> {todo.title}</h2>
 
+                <div>
+                  <button 
+                    className="btn btn-update"
+                    onClick={() => {}}
+                  >
+                    Modifier
+                  </button>
+                  <button 
+                    className="btn btn-delete"
+                    onClick={() => {}}
+                  >
+                    Effacer
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))
+        }
+        </ul>
+      </div>
     </section>
   )
 }
