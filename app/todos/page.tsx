@@ -1,7 +1,8 @@
 "use client"
 import { todo } from "node:test";
-import { useState, useEffect } from "react";
 import { formatDate } from '@/app/utils/formatDate';
+import { useState, useEffect } from "react";
+import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
 interface Todo {
   id: string;
@@ -50,13 +51,16 @@ const TodoList = () => {
                     className="btn btn-update"
                     onClick={() => {}}
                   >
-                    Modifier
+                    <PencilSquareIcon style={{ width: '20px'}} />
+                    {/* Les accolades extérieures { ... } indiquent : « interprète ceci comme du JavaScript »
+                    Les accolades intérieures { width: '20px' } créent un objet JavaScript. 
+                    style veut un objet, pas une chaine de caractère! */}
                   </button>
                   <button 
                     className="btn btn-delete"
                     onClick={() => {}}
                   >
-                    Effacer
+                    <TrashIcon style={{ width: '20px'}} />
                   </button>
                 </div>
               </div>
