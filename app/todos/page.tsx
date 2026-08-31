@@ -3,6 +3,7 @@ import { todo } from "node:test";
 import { formatDate } from '@/app/utils/formatDate';
 import { useState, useEffect } from "react";
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { useRouter } from 'next/navigation';
 
 interface Todo {
   id: string;
@@ -13,6 +14,8 @@ interface Todo {
 const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([]); //ce state est un array de Todo
   const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
 
   useEffect( () => {
     const getTodos = async () => {
@@ -25,6 +28,10 @@ const TodoList = () => {
 
     getTodos();
   }, [])
+
+  const handleEdit = async (todo: Todo) => {
+    router.push(`/todos/edit?id=${todo.id}`); //redirection sur la page d'édition
+  }
 
   return (
     <section>
@@ -49,7 +56,7 @@ const TodoList = () => {
                 <div>
                   <button 
                     className="btn btn-update"
-                    onClick={() => {}}
+                    onClick={() => handleEdit(todo)}
                   >
                     <PencilSquareIcon style={{ width: '20px'}} />
                     {/* Les accolades extérieures { ... } indiquent : « interprète ceci comme du JavaScript »

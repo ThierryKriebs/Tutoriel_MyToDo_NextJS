@@ -1,7 +1,11 @@
 "use client"
-
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation"
 
+interface Todo {
+    title: string;
+    date: string;
+}
 //Méthode de récupération numéro 1
 // const EditPage = async ({ searchParams } : { searchParams:Promise<{ id?: string }> }) => {
 //                                             //  Promise<{ id?: string } est équivalent à Promise<{id: string | undefined }  
@@ -18,9 +22,29 @@ import { useSearchParams } from "next/navigation"
 // Méthode de récupération numéro 2
 const EditPage = () => {
     
+    const [title, setTitle] = useState("");
+    const [date, setDate] = useState("");
+    const [todo, setTodo] = useState<Todo | undefined>(undefined); // la première fois, Todo est undefined
+
     const searchParams = useSearchParams();
     const todoId = searchParams.get("id");
     
+    useEffect(() => {
+
+        const getTodo = async () => {
+            const response = await fetch(`/api/todos/${todoId}`);
+            const data = await response.json();
+            console.log(data);
+            setTodo(data);
+            setTitle(data.title);
+            setDate(data.date);
+
+        }
+
+        if (todoId) getTodo()
+
+    }, [todoId])
+
     return (
         <div>{ todoId } salut!!!</div>
     )
