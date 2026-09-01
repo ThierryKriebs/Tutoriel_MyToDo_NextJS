@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 
 interface Todo {
     title: string;
@@ -26,6 +26,8 @@ const EditPage = () => {
     const [date, setDate] = useState("");
     const [todo, setTodo] = useState<Todo | undefined>(undefined); // la première fois, Todo est undefined
 
+    const router = useRouter();
+    
     const searchParams = useSearchParams();
     const todoId = searchParams.get("id");
     
@@ -33,11 +35,18 @@ const EditPage = () => {
 
         const getTodo = async () => {
             const response = await fetch(`/api/todos/${todoId}`);
-            const data = await response.json();
-            console.log(data);
-            setTodo(data);
-            setTitle(data.title);
-            setDate(data.date);
+
+            if (response.ok){
+                const data = await response.json();
+                console.log(data);
+                setTodo(data);
+                setTitle(data.title);
+                setDate(data.date);
+            } else {
+                console.log("Problème lors de la récupération de la tâche!");
+                router.push("/todos"); //redirection vers toutes les todos
+            }
+            
 
         }
 
