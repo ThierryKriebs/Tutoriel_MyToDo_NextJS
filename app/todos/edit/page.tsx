@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation"
+import Link from "next/link";
 
 interface Todo {
     title: string;
@@ -52,11 +53,48 @@ const EditPage = () => {
 
         if (todoId) getTodo()
 
-    }, [todoId])
+    }, [todoId, router]) 
 
-    return (
-        <div>{ todoId } salut!!!</div>
-    )
+    const handleEditTodo = () =>{
+
+    }
+
+    return todo ? (
+        <>
+            <form className="form" onSubmit={handleEditTodo}>
+                <div className="title">
+                    <h1>Modifier la tâche</h1>
+                </div>
+                <div className="align-horizontal">
+                    <div className="todo-container">
+                        <label className="placeholder">Todo</label>
+                        <input
+                            type="text"
+                            value={title}
+                            className="input"
+                            placeholder="Indiquez une tâche"
+                            autoComplete="off"
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </div>
+                    <div className="date-container">
+                        <label className="placeholder">Date</label>
+                        <input
+                            type="date"
+                            value={date}
+                            className="input"
+                            placeholder="Indiquez une date"
+                            onChange={(e) => setDate(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="button-container">
+                    <button type="submit" className="btn-success">Modifier</button>
+                    <Link className="redirect-link"href="/todos">Vers mes tâches</Link>
+                </div>
+            </form>
+        </>
+    ): <p>Veuillez patienter... </p>
 }
 
 

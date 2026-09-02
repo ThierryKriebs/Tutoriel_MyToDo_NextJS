@@ -55,25 +55,29 @@ const TodoList = () => {
                 <h2> {todo.title}</h2>
 
                 <div>
-                  {/* <button 
+                  <button 
                     className="btn btn-update"
                     onClick={() => handleEdit(todo)}
                   >
-                    <PencilSquareIcon style={{ width: '20px'}} /> */}
+                    <PencilSquareIcon style={{ width: '20px'}} />
                     {/* Les accolades extérieures { ... } indiquent : « interprète ceci comme du JavaScript »
                     Les accolades intérieures { width: '20px' } créent un objet JavaScript. 
                     style veut un objet, pas une chaine de caractère! */}
-                  {/* </button> */}
+                  </button>
 
-                  <Link
+                  {/* Idem avec un Link     */}
+                  {/* <Link
                     className="btn btn-update"
                     href={{
                       pathname: '/todos/edit',
                       query: { id: todo.id },
+                      
                     }}
+                    // alternative: href={`/todos/edit?id=${todo.id}`}                      
+
                   >
                     <PencilSquareIcon style={{ width: '20px'}} />
-                  </Link>
+                  </Link> */}
 
                   <button 
                     className="btn btn-delete"
