@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation"
 import Link from "next/link";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Todo {
     title: string;
@@ -26,6 +28,7 @@ const EditPage = () => {
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [todo, setTodo] = useState<Todo | undefined>(undefined); // la première fois, Todo est undefined
+    const [isDisabled, setIsDisabled] = useState(false);
 
     const router = useRouter();
     
@@ -55,12 +58,47 @@ const EditPage = () => {
 
     }, [todoId, router]) 
 
-    const handleEditTodo = () =>{
+    const handleEditTodo = async(event: React.FormEvent<HTMLFormElement>) =>{
+        event.preventDefault();
+        setIsDisabled(true);
 
+        if (!title || !date) return alert("Veuillez remplir tous les champs !");
+
+        console.log("Modification de la tâche avec l'id: ", todoId, " et le titre: ", title, " et la date: ", date);
+        // PATCH
+        const response = await fetch(`/api/todos/${todoId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ title, date }),
+        });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+            toast.success("Tâche modifiée avec succès !", {
+                onClose: () => {
+                    router.push("/todos"); //redirection vers toutes les todos
+                }
+            }) 
+        }
     }
 
     return todo ? (
         <>
+            <ToastContainer
+                position="top-center"
+                autoClose={500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+
             <form className="form" onSubmit={handleEditTodo}>
                 <div className="title">
                     <h1>Modifier la tâche</h1>
@@ -89,7 +127,7 @@ const EditPage = () => {
                     </div>
                 </div>
                 <div className="button-container">
-                    <button type="submit" className="btn-success">Modifier</button>
+                    <button disabled={isDisabled} type="submit" className="btn-success">Modifier</button>
                     <Link className="redirect-link"href="/todos">Vers mes tâches</Link>
                 </div>
             </form>
