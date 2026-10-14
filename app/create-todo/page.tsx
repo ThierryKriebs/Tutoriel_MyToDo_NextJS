@@ -1,26 +1,24 @@
 import prisma from "../db"
-import Button from "../ui/Button"
 
 const CreateTodo = () => {
  
-  // async function createTodo(formData:FormData){
-  //   "use server"
+  async function createTodo(formData:FormData){
+    "use server"
 
-  //   const title = formData.get("title") as string;
-  //   const date = formData.get("date") as string;
+    const title = formData.get("title") as string;
+    const date = formData.get("date") as string;
 
-  //   await prisma.todo.create({
-  //     data: {
-  //       title: title,
-  //       date: date
-  //     }
-  //   })
-  // }
+    await prisma.todo.create({
+      data: {
+        title: title,
+        date: date
+      }
+    })
+  }
 
   return (
     <>
-      {/* <form className="form" action={createTodo}> */}
-      <form className="form" >
+      <form className="form" action={createTodo}>
         <div className = "title">
           <h1>Créer une tâche</h1>
         </div>
@@ -54,7 +52,6 @@ const CreateTodo = () => {
               type="submit" 
               className="btn-success"
             >Créer</button>
-            <Button />
         </div>
       </form>
     </>
