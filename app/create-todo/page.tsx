@@ -1,20 +1,13 @@
-import prisma from "../db"
+import { useFormState } from "react-dom";
+import { createTodo } from '@/app/lib/actions';
+
+const initialState = {
+  message: "",
+}
 
 const CreateTodo = () => {
  
-  async function createTodo(formData:FormData){
-    "use server"
-
-    const title = formData.get("title") as string;
-    const date = formData.get("date") as string;
-
-    await prisma.todo.create({
-      data: {
-        title: title,
-        date: date
-      }
-    })
-  }
+ useFormState(createTodo, initialState)
 
   return (
     <>
