@@ -10,7 +10,7 @@ import { z } from 'zod';
     },
     formData:FormData
 ){
-    // Expected shape of the form data
+    // Expected structure of the form data
     const schema = z.object({
         title: z.string(),
         date: z.string(),
@@ -27,6 +27,7 @@ import { z } from 'zod';
         return { message: "error"}
     }
 
+    // Retrieve the sanitised and typed values
     const data = parse.data;
 
     // Persist the validated todo in the database
@@ -39,6 +40,7 @@ import { z } from 'zod';
             }
         })
 
+        
         return { message: 'success'}
         
     // Never let a database error crash the action; return an error message instead
@@ -48,3 +50,5 @@ import { z } from 'zod';
 
     
   }
+
+
