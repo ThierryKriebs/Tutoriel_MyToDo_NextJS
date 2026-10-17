@@ -60,7 +60,6 @@ const CreateTodo = () => {
         action={async (formData: FormData) => {
           formAction(formData);
           formRef.current?.reset(); // Vide les inputs du formulaire sans déclencher de rerendu, car les inputs sont non contrôlés
-          setIsBtnDisabled(true);
         }}
         ref={formRef} // Demande à React de mémoriser l'élément DOM <form> dans
                       // formRef.current (rempli au montage, conservé entre les rendus,
@@ -96,7 +95,7 @@ const CreateTodo = () => {
         </div>
 
         <div className="button-container">
-           <Button isDisabled={isBtnDisabled} />
+           <Button />
         </div>
       </form>
     </>
