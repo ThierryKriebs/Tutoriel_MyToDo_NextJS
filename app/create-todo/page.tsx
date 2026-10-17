@@ -6,6 +6,7 @@ import { createTodo } from '@/app/lib/actions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
+import Button from '@/app/ui/Button';
 
 
 const initialState = {
@@ -20,6 +21,8 @@ const CreateTodo = () => {
  const [isToastShown, setIsToastShown] = useState(false);
  const formRef = useRef<HTMLFormElement>(null); //formRef est juste une boîte ({ current: null }). useRef garantit que cette boîte est toujours la même d'un rendu à l'autre.
                                                 // useRef retourne toujours un objet avec une seule propriété nommée current
+
+ const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
   useEffect(() => {
 
@@ -57,6 +60,7 @@ const CreateTodo = () => {
         action={async (formData: FormData) => {
           formAction(formData);
           formRef.current?.reset(); // Vide les inputs du formulaire sans déclencher de rerendu, car les inputs sont non contrôlés
+          setIsBtnDisabled(true);
         }}
         ref={formRef} // Demande à React de mémoriser l'élément DOM <form> dans
                       // formRef.current (rempli au montage, conservé entre les rendus,
@@ -92,10 +96,7 @@ const CreateTodo = () => {
         </div>
 
         <div className="button-container">
-            <button 
-              type="submit" 
-              className="btn-success"
-            >Créer</button>
+           <Button isDisabled={isBtnDisabled} />
         </div>
       </form>
     </>
