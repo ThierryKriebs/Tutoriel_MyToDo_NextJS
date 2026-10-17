@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from "next/cache";
 import prisma from "../db";
 import { z } from 'zod';
 
@@ -40,7 +41,8 @@ import { z } from 'zod';
             }
         })
 
-        
+        revalidatePath('/todos'); // Supprime le cache de la route (on est sûr de voir tous les todos, y compris la dernière)
+
         return { message: 'success'}
         
     // Never let a database error crash the action; return an error message instead
