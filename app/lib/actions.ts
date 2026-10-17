@@ -103,6 +103,22 @@ import { z } from 'zod';
     } catch (error) {
         return { message: "error"}
     }
+  }
 
+
+  export async function deleteTodo(id: string){
+    try {
+        await prisma.todo.delete({
+            where: {
+                id: id
+            }
+        })
+        revalidatePath('/todos'); // Supprime le cache de la route (on est sûr de voir tous les todos, y compris la dernière)
+        return { message: 'success' }
+
+    } catch (error) {
+        return { message: 'error'}
+    }
+    
     
   }
