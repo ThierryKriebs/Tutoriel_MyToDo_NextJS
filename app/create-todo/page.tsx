@@ -1,7 +1,5 @@
 "use client"
-import { useEffect, useState,useRef } from 'react';
-import { useFormState } from "react-dom"; // déprécié en React 19.2
-//import { useActionState } from "react" // En rReact 19.2
+import { useEffect, useState, useRef, useActionState } from 'react';
 import { createTodo } from '@/app/lib/actions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,8 +13,7 @@ const initialState = {
 
 const CreateTodo = () => {
  
- const [state, formAction] = useFormState(createTodo, initialState); //Depuis React 19.2: ReactDOM.useFormState has been renamed to React.useActionState. Please update CreateTodo to use React.useActionState. 
-                                                                      //React 19.2: const [state, formAction, isPending] = useActionState(action, initialState)
+ const [state, formAction] = useActionState(createTodo, initialState);
  const router = useRouter();
  const [isToastShown, setIsToastShown] = useState(false);
  const formRef = useRef<HTMLFormElement>(null); //formRef est juste une boîte ({ current: null }). useRef garantit que cette boîte est toujours la même d'un rendu à l'autre.

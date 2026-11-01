@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { updateTodo } from '@/app/lib/actions';
-import { useFormState } from "react-dom";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useActionState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
@@ -22,7 +21,7 @@ export default function EditTodo({ todo }: { todo: Todo }) {
   
   const { id, title, date } = todo;
 
-  const [state, formAction] = useFormState(updateTodo, initialState) 
+  const [state, formAction] = useActionState(updateTodo, initialState)
   const formRef = useRef<HTMLFormElement>(null);
   const [isToastShown, setIsToastShown] = useState(false);
   const router = useRouter();
